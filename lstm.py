@@ -10,6 +10,7 @@ from tensorflow.contrib.tensorboard.plugins import projector
 from data_model import *
 from config import *
 
+
 CONFIG = CONFIG['lstm']
 class LSTM(object):
 
