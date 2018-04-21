@@ -15,7 +15,7 @@ output_size = 1
 lr = 0.0006         #学习率
 label_column = 6
 #——————————————————导入数据——————————————————————
-f = open('SP500.csv')
+f = open('data/SP500.csv')
 df = pd.read_csv(f)     #读入股票数据
 data = df.iloc[:, 1:7]  #取第2-7列
 close_price = data['Close']
@@ -99,6 +99,8 @@ def train_lstm(batch_size=80, time_step=15, train_begin=0, train_end=200):
     batch_index, train_x, train_y = get_train_data(batch_size, time_step, train_begin, train_end)
     pred,_ = lstm(X)
     # 损失函数
+    print("pred", tf.reshape(pred, [-1]))
+    print("Y", tf.reshape(Y, [-1]))
     loss = tf.reduce_mean(tf.square(tf.reshape(pred, [-1])-tf.reshape(Y, [-1])))
     train_op = tf.train.AdamOptimizer(lr).minimize(loss)
     saver = tf.train.Saver(tf.global_variables(), max_to_keep=15)
@@ -109,13 +111,15 @@ def train_lstm(batch_size=80, time_step=15, train_begin=0, train_end=200):
         #重复训练2000次
         for i in range(2000):
             for step in range(len(batch_index)-1):
+                s_train = train_x[batch_index[step]:batch_index[step + 1]]
+                print("s_train:", tf.shape(s_train))
                 _, loss_ = sess.run([train_op, loss], feed_dict={X: train_x[batch_index[step]:batch_index[step+1]], Y: train_y[batch_index[step]:batch_index[step+1]]})
             print(i, loss_)
             if i % 200 == 0:
                 print("保存模型：",saver.save(sess, 'stock2.model', global_step=i))
 
 
-#train_lstm()
+# train_lstm()
 
 
 #————————————————预测模型————————————————————

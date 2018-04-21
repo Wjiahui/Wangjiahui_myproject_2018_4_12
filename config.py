@@ -1,5 +1,7 @@
 import codecs
 import yaml
+
+
 CONFIG = yaml.load(codecs.open('rnn', 'r', 'utf8'))
 
 
@@ -22,3 +24,4 @@ CONFIG = yaml.load(codecs.open('rnn', 'r', 'utf8'))
 DATA_DIR = "data"
 LOG_DIR = "logs"
 MODEL_DIR = "models"
+PLOTS_DIR = "images"

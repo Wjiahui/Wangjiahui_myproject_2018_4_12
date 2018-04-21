@@ -1,11 +1,13 @@
 lstm:
-    input_size: 7
+    input_size: 6
     output_size: 1
+#    time_step: 20
     time_step: 20
-    lstm_unit: 128
-    num_layers: 1
+    lstm_unit: 10
+    num_layers: 2
     keep_prob: 0.8
 
+#    batch_size: 64
     batch_size: 64
     init_learning_rate: 0.0006
     learning_rate_decay: 0.99
